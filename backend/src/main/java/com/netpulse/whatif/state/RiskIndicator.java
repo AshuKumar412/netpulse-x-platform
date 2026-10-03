@@ -1,0 +1,12 @@
+package com.netpulse.whatif.state;
+
+public enum RiskIndicator {
+    HEALTHY_CAPACITY,
+    CAPACITY_PRESSURE,
+    DEGRADED_CAPACITY,
+    FAILOVER_REQUIRED,
+    NO_ELIGIBLE_REPLACEMENT,
+    ISOLATED_TOPOLOGY,
+    SCHEDULING_PRESSURE,
+    HIGH_QUEUE_WAIT
+}

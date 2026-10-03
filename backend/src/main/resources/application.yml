@@ -1,0 +1,135 @@
+server:
+  port: ${SERVER_PORT:8080}
+
+spring:
+  application:
+    name: netpulse-backend
+
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/netpulse_db}
+    username: ${DATABASE_USERNAME:postgres}
+    password: ${DATABASE_PASSWORD:root}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      idle-timeout: 30000
+      connection-timeout: 20000
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      timeout: 2000ms
+
+  mail:
+    host: ${MAIL_HOST:localhost}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: ${MAIL_SMTP_AUTH:false}
+          starttls:
+            enable: ${MAIL_SMTP_STARTTLS_ENABLE:false}
+            required: ${MAIL_SMTP_STARTTLS_REQUIRED:false}
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+
+app:
+  mail:
+    from: ${MAIL_FROM:noreply@netpulse-x.com}
+    from-name: ${MAIL_FROM_NAME:NetPulse X Platform}
+  chaos:
+    enabled: ${NETPULSE_CHAOS_ENABLED:true}
+    max-duration-seconds: ${CHAOS_MAX_DURATION:300}
+    max-concurrent-experiments: ${CHAOS_MAX_CONCURRENT:3}
+    cooldown-seconds: ${CHAOS_COOLDOWN_SECONDS:30}
+    protected-nodes: ${CHAOS_PROTECTED_NODES:}
+  jwt:
+    secret: ${JWT_SECRET}
+    expiration-ms: ${JWT_EXPIRATION_MS:86400000}
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173,http://localhost:3000}
+  telemetry:
+    interval-ms: ${TELEMETRY_INTERVAL_MS:2000}
+    history-retention-limit: ${TELEMETRY_HISTORY_LIMIT:50}
+    retention-hours: ${TELEMETRY_RETENTION_HOURS:24}
+  heartbeat:
+    interval-ms: ${HEARTBEAT_INTERVAL_MS:3000}
+    timeout-seconds: ${HEARTBEAT_TIMEOUT_SECONDS:10}
+    suspected-threshold-seconds: ${HEARTBEAT_SUSPECTED_SECONDS:5}
+  health:
+    cpu-warning: ${HEALTH_CPU_WARNING:70.0}
+    cpu-critical: ${HEALTH_CPU_CRITICAL:90.0}
+    memory-warning: ${HEALTH_MEMORY_WARNING:75.0}
+    memory-critical: ${HEALTH_MEMORY_CRITICAL:90.0}
+    latency-warning: ${HEALTH_LATENCY_WARNING:100.0}
+    latency-critical: ${HEALTH_LATENCY_CRITICAL:250.0}
+    packet-loss-warning: ${HEALTH_PACKET_LOSS_WARNING:2.0}
+    packet-loss-critical: ${HEALTH_PACKET_LOSS_CRITICAL:5.0}
+    error-rate-warning: ${HEALTH_ERROR_RATE_WARNING:1.0}
+    error-rate-critical: ${HEALTH_ERROR_RATE_CRITICAL:5.0}
+  routing:
+    default-strategy: ${ROUTING_DEFAULT_STRATEGY:ADAPTIVE}
+    history-retention-limit: ${ROUTING_HISTORY_LIMIT:100}
+    eligibility:
+      allow-warning: ${ROUTING_ALLOW_WARNING:true}
+      allow-degraded: ${ROUTING_ALLOW_DEGRADED:false}
+      allow-suspected: ${ROUTING_ALLOW_SUSPECTED:false}
+    weights:
+      cpu: ${ROUTING_WEIGHT_CPU:0.20}
+      memory: ${ROUTING_WEIGHT_MEMORY:0.15}
+      latency: ${ROUTING_WEIGHT_LATENCY:0.20}
+      packet-loss: ${ROUTING_WEIGHT_PACKET_LOSS:0.10}
+      error-rate: ${ROUTING_WEIGHT_ERROR_RATE:0.10}
+      connections: ${ROUTING_WEIGHT_CONNECTIONS:0.15}
+      capacity: ${ROUTING_WEIGHT_CAPACITY:0.10}
+  failover:
+    enabled: ${FAILOVER_ENABLED:true}
+    confirmation:
+      consecutive-failures: ${FAILOVER_CONSECUTIVE_FAILURES:2}
+    recovery:
+      enabled: ${FAILOVER_RECOVERY_ENABLED:true}
+      auto-recover: ${FAILOVER_AUTO_RECOVER:true}
+    verification:
+      heartbeat-required: ${FAILOVER_VERIFICATION_HEARTBEAT:true}
+      healthy-cycles-required: ${FAILOVER_VERIFICATION_CYCLES:2}
+    protection:
+      max-attempts: ${FAILOVER_MAX_ATTEMPTS:3}
+      cooldown-seconds: ${FAILOVER_COOLDOWN_SECONDS:15}
+    history-retention-limit: ${FAILOVER_HISTORY_LIMIT:100}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true
+  health:
+    redis:
+      enabled: false
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method

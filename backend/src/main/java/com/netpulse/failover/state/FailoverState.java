@@ -1,0 +1,17 @@
+package com.netpulse.failover.state;
+
+public enum FailoverState {
+    HEALTHY,
+    SUSPECTED,
+    FAILURE_DETECTED,
+    FAILURE_CONFIRMED,
+    ISOLATING,
+    FAILOVER_IN_PROGRESS,
+    REROUTED,
+    RECOVERY_IN_PROGRESS,
+    RECOVERY_VERIFICATION,
+    RECOVERED,
+    RESTORED,
+    RECOVERY_FAILED,
+    FAILOVER_FAILED
+}
