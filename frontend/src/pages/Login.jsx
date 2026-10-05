@@ -115,7 +115,7 @@ export const Login = () => {
 
         <div className="mt-6 text-center">
           <p className="text-[11px] text-slate-400 font-mono">
-            NetPulse X Engine v1.0.0 (Phase 1 Foundation)
+            NetPulse X Platform v1.0.0 — Autonomous Infrastructure & Traffic Routing
           </p>
         </div>
       </div>

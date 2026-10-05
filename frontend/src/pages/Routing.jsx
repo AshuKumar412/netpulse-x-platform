@@ -465,7 +465,7 @@ export const Routing = () => {
       {/* Historical Decisions Log */}
       <Card
         title="Routing Decisions Log"
-        subtitle="Persistent audit log of traffic routing decisions recorded in PostgreSQL"
+        subtitle="Persistent immutable audit log of real-time traffic routing decisions"
       >
         {history.length === 0 ? (
           <div className="py-8 text-center text-slate-400 text-xs font-mono">

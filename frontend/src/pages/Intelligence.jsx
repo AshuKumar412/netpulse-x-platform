@@ -230,7 +230,7 @@ export const Intelligence = () => {
               Predictive Congestion & ML Intelligence
             </h1>
             <span className="px-3 py-1 text-xs font-semibold uppercase tracking-wider rounded-full bg-violet-500/10 text-violet-400 border border-violet-500/30">
-              Phase 9 Active
+              Machine Learning Active
             </span>
           </div>
           <p className="text-slate-400 mt-1 text-sm">
@@ -686,7 +686,7 @@ export const Intelligence = () => {
               Predictive Routing & Failover Integration
             </h3>
             <p className="text-xs text-slate-400 mt-1">
-              Configure how ML forecasts influence candidate routing scoring (Phase 4) and advisory failover alerts (Phase 5).
+              Configure how ML forecasts influence candidate routing scoring and automated recovery advisories.
             </p>
           </div>
 
@@ -695,7 +695,7 @@ export const Intelligence = () => {
               <div>
                 <label className="text-sm font-semibold text-white block">Predictive Traffic Routing</label>
                 <span className="text-xs text-slate-400">
-                  Applies congestion risk penalties to candidate scores during Phase 4 route decisions.
+                  Applies congestion risk penalties to candidate scores during traffic routing decisions.
                 </span>
               </div>
               <input

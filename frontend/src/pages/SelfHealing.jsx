@@ -468,7 +468,7 @@ export const SelfHealing = () => {
       {/* Events History Table */}
       <Card
         title="Failover Events History"
-        subtitle="Persistent audit log of all failover lifecycle events — sourced from PostgreSQL"
+        subtitle="Persistent audit log of all automated failover and self-healing lifecycle events"
       >
         {events.length === 0 ? (
           <div className="py-10 text-center text-slate-400 text-xs font-mono flex flex-col items-center gap-2">

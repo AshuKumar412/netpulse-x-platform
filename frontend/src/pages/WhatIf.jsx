@@ -349,7 +349,7 @@ export const WhatIf = () => {
               What-If Infrastructure Simulator
             </h1>
             <span className="px-3 py-1 text-xs font-semibold uppercase tracking-wider rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
-              Phase 8 Active
+              Scenario Analysis
             </span>
           </div>
           <p className="text-slate-400 mt-1 text-sm">

@@ -530,7 +530,7 @@ export const Nodes = () => {
         isOpen={isDeleteModalOpen}
         onClose={() => setIsDeleteModalOpen(false)}
         title="Confirm Node Decommission"
-        subtitle="This action removes the node configuration from PostgreSQL"
+        subtitle="This action permanently removes the node from managed infrastructure"
       >
         <div className="space-y-4">
           <div className="p-3 rounded-lg bg-rose-500/10 border border-rose-500/20 flex items-start gap-3">

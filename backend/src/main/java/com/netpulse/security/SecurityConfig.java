@@ -63,11 +63,15 @@ public class SecurityConfig {
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        // Public endpoints
+                        // Public endpoints and static web app assets
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/actuator/**").permitAll()
                         .requestMatchers("/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                         .requestMatchers("/ws/**").permitAll()
+                        .requestMatchers("/", "/index.html", "/assets/**", "/*.js", "/*.css", "/*.ico", "/*.svg", "/*.png", "/*.woff2").permitAll()
+
+                        // Host System Discovery & Metrics endpoints (RBAC)
+                        .requestMatchers(HttpMethod.GET, "/api/system/**").hasAnyRole("ADMIN", "OPERATOR", "VIEWER")
 
                         // Node Management endpoints (RBAC)
                         .requestMatchers(HttpMethod.GET, "/api/nodes/**").hasAnyRole("ADMIN", "OPERATOR", "VIEWER")

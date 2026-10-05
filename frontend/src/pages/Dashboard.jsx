@@ -239,7 +239,7 @@ export const Dashboard = () => {
             </span>
           </div>
           <p className="text-xs text-slate-400 font-mono mt-1">
-            Phase 3 Deterministic Telemetry Engine &bull; Liveness Heartbeats &bull; Node Health Engine
+            Real-Time Telemetry Engine &bull; Infrastructure Liveness Heartbeats &bull; Automated Health Engine
           </p>
         </div>
 
@@ -370,10 +370,10 @@ export const Dashboard = () => {
         </Card>
       </div>
 
-      {/* Historical Telemetry Charts (Real Data from PostgreSQL) */}
+      {/* Historical Telemetry Charts */}
       <Card
         title="Node Telemetry History & Time-Series Metrics"
-        subtitle="Real-time time series recorded in PostgreSQL and updated via WebSocket"
+        subtitle="Real-time time series recorded and synchronized via live telemetry stream"
         headerAction={
           hasNodes && (
             <div className="flex items-center gap-2">

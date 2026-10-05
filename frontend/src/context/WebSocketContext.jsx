@@ -21,6 +21,7 @@ export const WebSocketProvider = ({ children }) => {
   const [schedulerUpdate, setSchedulerUpdate] = useState(null);
   const [whatIfUpdate, setWhatIfUpdate] = useState(null);
   const [predictionUpdate, setPredictionUpdate] = useState(null);
+  const [systemMetricsUpdate, setSystemMetricsUpdate] = useState(null);
   const clientRef = useRef(null);
 
   useEffect(() => {
@@ -156,10 +157,19 @@ export const WebSocketProvider = ({ children }) => {
           }
         });
 
-        // Phase 9: Predictive Congestion Detection & ML Intelligence events
+        // Predictive Congestion Detection & ML Intelligence events
         client.subscribe('/topic/predictions', (message) => {
           try {
             setPredictionUpdate(JSON.parse(message.body));
+          } catch (e) {
+            // Ignore malformed payloads
+          }
+        });
+
+        // Host Machine Live Discovery & Metrics updates
+        client.subscribe('/topic/system-metrics', (message) => {
+          try {
+            setSystemMetricsUpdate(JSON.parse(message.body));
           } catch (e) {
             // Ignore malformed payloads
           }
@@ -210,6 +220,7 @@ export const WebSocketProvider = ({ children }) => {
         schedulerUpdate,
         whatIfUpdate,
         predictionUpdate,
+        systemMetricsUpdate,
         sendPing,
       }}
     >

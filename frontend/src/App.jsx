@@ -15,6 +15,7 @@ import { Chaos } from './pages/Chaos';
 import { Scheduler } from './pages/Scheduler';
 import { WhatIf } from './pages/WhatIf';
 import { Intelligence } from './pages/Intelligence';
+import SystemOverview from './pages/SystemOverview';
 
 export function App() {
   return (
@@ -35,7 +36,8 @@ export function App() {
                 </ProtectedRoute>
               }
             >
-              <Route index element={<Navigate to="/dashboard" replace />} />
+              <Route index element={<Navigate to="/system" replace />} />
+              <Route path="system" element={<SystemOverview />} />
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="intelligence" element={<Intelligence />} />
               <Route path="what-if" element={<WhatIf />} />

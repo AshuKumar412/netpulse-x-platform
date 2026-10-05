@@ -296,7 +296,7 @@ export const Scheduler = () => {
               <div className="flex items-center gap-2">
                 <h1 className="text-xl font-bold text-white tracking-tight">OS Process & CPU Scheduler</h1>
                 <span className="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
-                  Phase 7 Active
+                  Simulation Engine
                 </span>
                 <span className={`px-2.5 py-0.5 text-xs font-semibold rounded-full border ${
                   currentStatus === 'RUNNING'

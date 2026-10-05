@@ -35,7 +35,7 @@ const SCENARIOS = [
   {
     type: 'NODE_FAILURE',
     title: 'Node Outage / Crash',
-    desc: 'Simulate complete node failure and heartbeat termination to trigger Phase 5 automated failover.',
+    desc: 'Simulate complete node outage and heartbeat termination to validate automated failover recovery.',
     icon: Flame,
     color: 'text-rose-400',
     border: 'border-rose-500/30',
