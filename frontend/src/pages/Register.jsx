@@ -16,6 +16,7 @@ export const Register = () => {
 
   // Step 2 State: OTP Verification
   const [otp, setOtp] = useState('');
+  const [isVerified, setIsVerified] = useState(false);
   const [resendCooldown, setResendCooldown] = useState(60);
   const [resendLoading, setResendLoading] = useState(false);
 
@@ -65,38 +66,45 @@ export const Register = () => {
       setStep(2);
       setResendCooldown(60);
     } catch (err) {
-      setError(err.message || 'Registration failed');
+      setError(err.response?.data?.message || err.message || 'Registration failed');
     } finally {
       setLoading(false);
     }
   };
 
+  const handleOtpChange = (e) => {
+    // Strictly preserve 6 numeric digits as a string (including leading zeros)
+    const cleanValue = e.target.value.replace(/\D/g, '').slice(0, 6);
+    setOtp(cleanValue);
+    if (error) setError('');
+  };
+
+  const isOtpValid = /^\d{6}$/.test(otp);
+
   const handleVerifyOtpSubmit = async (e) => {
     e.preventDefault();
+    if (!isOtpValid || loading || isVerified) return;
+
     setError('');
     setSuccess('');
-
-    if (!otp.trim() || otp.trim().length !== 6) {
-      setError('Please enter the complete 6-digit verification code');
-      return;
-    }
-
     setLoading(true);
+
     try {
       await authService.verifyEmail(email.trim(), otp.trim());
-      setSuccess('Email verified successfully! Welcome to NetPulse X. Redirecting to login...');
+      setIsVerified(true);
+      setSuccess('Email verified successfully! Welcome to NetPulse X. Redirecting to sign in...');
       setTimeout(() => {
         navigate('/login');
       }, 2000);
     } catch (err) {
-      setError(err.message || 'Verification failed. Please check your code and try again.');
+      setError(err.response?.data?.message || err.message || 'Verification failed. Please check your code and try again.');
     } finally {
       setLoading(false);
     }
   };
 
   const handleResendOtp = async () => {
-    if (resendCooldown > 0 || resendLoading) return;
+    if (resendCooldown > 0 || resendLoading || isVerified) return;
     setError('');
     setSuccess('');
     setResendLoading(true);
@@ -105,7 +113,7 @@ export const Register = () => {
       setSuccess('A new verification code has been sent to your email.');
       setResendCooldown(60);
     } catch (err) {
-      setError(err.message || 'Failed to resend code');
+      setError(err.response?.data?.message || err.message || 'Failed to resend verification code');
     } finally {
       setResendLoading(false);
     }
@@ -238,9 +246,11 @@ export const Register = () => {
                   <input
                     id="otp"
                     type="text"
+                    inputMode="numeric"
+                    autoComplete="one-time-code"
                     maxLength={6}
                     value={otp}
-                    onChange={(e) => setOtp(e.target.value.replace(/[^0-9]/g, ''))}
+                    onChange={handleOtpChange}
                     placeholder="123456"
                     className="w-full text-center text-2xl tracking-[0.5em] font-mono py-3 bg-slate-950 border border-slate-700 rounded-xl text-white focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
                     autoFocus
@@ -256,19 +266,19 @@ export const Register = () => {
                   variant="primary"
                   size="md"
                   loading={loading}
-                  disabled={!!success || otp.length !== 6}
+                  disabled={!isOtpValid || loading || isVerified}
                   className="w-full"
                 >
-                  Verify Email & Activate Account
+                  {isVerified ? 'Account Activated!' : 'Verify Email & Activate Account'}
                 </Button>
 
                 <div className="pt-2 flex flex-col items-center gap-2">
                   <button
                     type="button"
                     onClick={handleResendOtp}
-                    disabled={resendCooldown > 0 || resendLoading}
+                    disabled={resendCooldown > 0 || resendLoading || isVerified}
                     className={`inline-flex items-center gap-1.5 text-xs font-mono transition-colors ${
-                      resendCooldown > 0
+                      resendCooldown > 0 || isVerified
                         ? 'text-slate-400 cursor-not-allowed'
                         : 'text-sky-400 hover:text-sky-300 underline'
                     }`}
@@ -285,6 +295,7 @@ export const Register = () => {
                       setStep(1);
                       setError('');
                       setSuccess('');
+                      setOtp('');
                     }}
                     className="text-[11px] text-slate-400 hover:text-slate-300 font-mono underline mt-1"
                   >
